@@ -1,0 +1,119 @@
+-- ---
+-- Globals
+-- ---
+
+-- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- SET FOREIGN_KEY_CHECKS=0;
+
+-- ---
+-- Table 'Users'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `Users`;
+		
+CREATE TABLE `Users` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `name` VARCHAR(255) NULL DEFAULT NULL,
+  `username` VARCHAR(255) NULL DEFAULT NULL,
+  `password` VARCHAR NULL DEFAULT NULL,
+  `status` SMALLINT(1) NULL DEFAULT NULL,
+  `register_at` DATETIME NULL DEFAULT NULL,
+  `deleted_at` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'Role'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `Role`;
+		
+CREATE TABLE `Role` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `name` VARCHAR(255) NULL DEFAULT NULL,
+  `state` SMALLINT(1) NULL DEFAULT NULL,
+  `rules` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'Projects'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `Projects`;
+		
+CREATE TABLE `Projects` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `name` VARCHAR(255) NULL DEFAULT NULL,
+  `started_at` DATETIME NULL DEFAULT NULL,
+  `state` SMALLINT(1) NULL DEFAULT NULL,
+  `finished_at` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'User_Role'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `User_Role`;
+		
+CREATE TABLE `User_Role` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `user_id` INTEGER NULL DEFAULT NULL,
+  `role_id` INTEGER NULL DEFAULT NULL,
+  `active` SMALLINT(1) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'User_Project'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `User_Project`;
+		
+CREATE TABLE `User_Project` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `user_id` INTEGER NULL DEFAULT NULL,
+  `project_id` INTEGER NULL DEFAULT NULL,
+  `active` SMALLINT(1) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Foreign Keys 
+-- ---
+
+ALTER TABLE `User_Role` ADD FOREIGN KEY (user_id) REFERENCES `Users` (`id`);
+ALTER TABLE `User_Role` ADD FOREIGN KEY (role_id) REFERENCES `Role` (`id`);
+ALTER TABLE `User_Project` ADD FOREIGN KEY (user_id) REFERENCES `Users` (`id`);
+ALTER TABLE `User_Project` ADD FOREIGN KEY (project_id) REFERENCES `Projects` (`id`);
+
+-- ---
+-- Table Properties
+-- ---
+
+-- ALTER TABLE `Users` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Role` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Projects` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `User_Role` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `User_Project` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ---
+-- Test Data
+-- ---
+
+-- INSERT INTO `Users` (`id`,`name`,`username`,`password`,`status`,`register_at`,`deleted_at`) VALUES
+-- ('','','','','','','');
+-- INSERT INTO `Role` (`id`,`name`,`state`,`rules`) VALUES
+-- ('','','','');
+-- INSERT INTO `Projects` (`id`,`name`,`started_at`,`state`,`finished_at`) VALUES
+-- ('','','','','');
+-- INSERT INTO `User_Role` (`id`,`user_id`,`role_id`,`active`) VALUES
+-- ('','','','');
+-- INSERT INTO `User_Project` (`id`,`user_id`,`project_id`,`active`) VALUES
+-- ('','','','');
